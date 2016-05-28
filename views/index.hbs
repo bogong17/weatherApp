@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title>Weather Forecast </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js">  </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script>
+
+      
+      
+    </script>
+  </head>
+  <body class="jumbotron well">
+    {{!--angularJS App--}}
+     <div class="well" ng-app="myApp" ng-controller="myCtrl">
+        <h1 class="page-header well">Forecast for<strong> <em>{[{city}]}</em> </strong></h1>
+        <form  class="form-group">
+          <div>
+            <label class="">City:</label>
+            <select class="btn btn-default dropdown-toggle form-control"  name="city" id="city" ng-model="city">
+              <option value="Tucson">Tucson</option>
+              <option value="Phoenix">Phoenix</option>
+              <option value="Seattle">Seattle</option>
+              <option value="Miami">Miami</option>
+              <option value="Austin">Austin</option>
+            </select>
+            
+            <label class="">Weather Type:</label>
+            <select class="btn btn-default dropdown-toggle form-control" name="myType" id="myType" ng-model="myType">
+              <option value="current">current weather</option>
+              <option value="forecast">5 day forecast</option>
+            </select>
+            <br></br>
+            <input class="btn btn-primary" type="button" id="submit" value="Submit">             
+          </div>
+
+        </form>
+        <div>
+      {{!--switch by weather type    --}}
+        {{!--current type--}}
+      <div ng-switch="myType"> 
+       <div class="table-responsive" ng-switch-when="current">
+          <table class="table table-bordered table-hover">
+          <tr>
+            <th ng-show="data.main.temp">Date</th>
+            <th ng-show="data.main.temp">Temp</th>
+          </tr>
+          <tr >
+            <td ng-show="data.main.temp">{[{day | date:medium}]}</td>
+            <td ng-show="data.main.temp">{[{data.main.temp+" °F"}]}</td>
+          </tr>
+        </table>
+       </div>
+        {{!--forecast type--}}
+      <div class="table-responsive" ng-switch-when="forecast">
+          <table class="table table-bordered table-hover table-striped">
+          <tr>
+            <th ng-show="data.list[0]">Date</th>
+            <th ng-show="data.list[0]">Temp</th>
+          </tr>
+          <tr ng-repeat="x in [0,8,16,24,32]">
+            <td ng-show="data.list[x].dt">{[{data.list[x].dt*1000 | date: "MMM d, y"}]}</td>
+            <td ng-show="data.list[x].main.temp">{[{data.list[x].main.temp+" °F"}]}</td>
+          </tr>
+          
+        </table>
+      </div>
+      <div ng-switch-default></div>
+    
+    </div>
+    
+   </div>
+   
+    </div>
+    
+    <p class="pull-right">   By Bo Gong 2016</p>
+    
+    <script src="/scripts/ang.js"></script>
+  </body>
+</html>
